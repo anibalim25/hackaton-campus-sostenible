@@ -9,6 +9,7 @@ export default function ComponenteLista({
   nivelLlenado,
   color,
   onVerDetalles
+  
 }) {
   const navigate = useNavigate();
 
