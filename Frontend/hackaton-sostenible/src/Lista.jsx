@@ -1,7 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ComponenteLista from './ComponenteLista';
+import BotonNavegacion from './BotonNavegacion';
 
 function Lista() {
+  const navigate = useNavigate();
+
   const [filtro, setFiltro] = useState('Todos');
   const [busqueda, setBusqueda] = useState('');
   const [ubicacionFiltro, setUbicacionFiltro] = useState('Todas');
@@ -66,10 +70,18 @@ function Lista() {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Monitor de Contenedores ECO-ETSISI</h1>
+        {/* Header con título y botón Volver */}
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800">Monitor de Contenedores ECO-ETSISI</h1>
+          <BotonNavegacion
+            to = "/"
+             className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+          >
+            Volver
+          </BotonNavegacion>
+        </div>
 
         {/* Filtros */}
-
         <div className="mb-8 flex flex-col sm:flex-row flex-wrap justify-between items-center gap-4">
           <div className="w-full sm:w-auto">
             <input
@@ -84,7 +96,6 @@ function Lista() {
             />
           </div>
 
-          
           <div className="flex gap-2 w-full sm:w-auto flex-wrap">
             {['Todos', 'Plásticos', 'Vidrio', 'Orgánico', 'Papel/Cartón'].map((tipo) => (
               <button
