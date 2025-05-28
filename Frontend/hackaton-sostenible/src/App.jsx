@@ -1,9 +1,11 @@
+import Contenedor from "./Contenedor"
+
 
 function App() {
 
   return (
     <>
-      <p>HOla</p>
+      <Contenedor></Contenedor>
     </>
   )
 }
