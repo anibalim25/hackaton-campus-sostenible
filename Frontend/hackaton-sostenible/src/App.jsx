@@ -1,11 +1,15 @@
+import Home from "./Home"
+
 
 function App() {
 
   return (
     <>
-      <p>HOla</p>
+      
+      <Home/>
     </>
   )
+
 }
 
 export default App
