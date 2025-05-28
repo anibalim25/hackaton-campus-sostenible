@@ -21,7 +21,8 @@ export default function ComponenteLista({
 
   const buttonClasses = {
     naranja: 'bg-orange-500 hover:bg-orange-600',
-    azul: 'bg-blue-500 hover:bg-blue-600'
+    azul: 'bg-blue-500 hover:bg-blue-600',
+    verde: 'bg-green-500 hover:bg-green-600'
   };
 
   return (

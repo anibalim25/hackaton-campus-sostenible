@@ -1,7 +1,13 @@
+import { useState } from 'react';
 import ComponenteLista from './ComponenteLista';
 
 function Lista() {
-  // Datos de ejemplo para los contenedores
+  const [filtro, setFiltro] = useState('Todos');
+  const [busqueda, setBusqueda] = useState('');
+  const [ubicacionFiltro, setUbicacionFiltro] = useState('Todas');
+  const [paginaActual, setPaginaActual] = useState(1);
+  const contenedoresPorPagina = 2;
+
   const contenedores = [
     {
       id: "CONT-001",
@@ -9,7 +15,7 @@ function Lista() {
       capacidad: "75%",
       ubicacion: "Edificio A, Planta Baja",
       nivelLlenado: "amarillo",
-      color: "naranja"
+      color: "verde"
     },
     {
       id: "CONT-002",
@@ -17,7 +23,7 @@ function Lista() {
       capacidad: "30%",
       ubicacion: "Edificio B, Pasillo Central",
       nivelLlenado: "verde",
-      color: "azul"
+      color: "verde"
     },
     {
       id: "CONT-003",
@@ -25,7 +31,7 @@ function Lista() {
       capacidad: "95%",
       ubicacion: "Comedor Principal",
       nivelLlenado: "rojo",
-      color: "naranja"
+      color: "verde"
     },
     {
       id: "CONT-004",
@@ -33,60 +39,128 @@ function Lista() {
       capacidad: "60%",
       ubicacion: "Biblioteca, Sala de Estudio",
       nivelLlenado: "amarillo",
-      color: "azul"
+      color: "verde"
     }
   ];
 
+  const ubicacionesUnicas = ['Todas', ...new Set(contenedores.map(c => c.ubicacion))];
+
   const handleVerContenedores = (id) => {
     console.log(`Mostrar detalles del contenedor ${id}`);
-    // Aquí puedes implementar la navegación o lógica para mostrar detalles
   };
+
+  // Filtrado
+  const contenedoresFiltrados = contenedores.filter(c => {
+    const coincideTipo = filtro === 'Todos' || c.tipo === filtro;
+    const coincideBusqueda = c.id.toLowerCase().includes(busqueda.toLowerCase());
+    const coincideUbicacion = ubicacionFiltro === 'Todas' || c.ubicacion === ubicacionFiltro;
+    return coincideTipo && coincideBusqueda && coincideUbicacion;
+  });
+
+  // Paginación
+  const indexInicio = (paginaActual - 1) * contenedoresPorPagina;
+  const indexFin = indexInicio + contenedoresPorPagina;
+  const contenedoresPaginados = contenedoresFiltrados.slice(indexInicio, indexFin);
+  const totalPaginas = Math.ceil(contenedoresFiltrados.length / contenedoresPorPagina);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Monitor de Contenedores ECO-ETSISI</h1>
-        
-        {/* Filtros y búsqueda (opcional) */}
-        <div className="mb-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+
+        <div className="mb-8 flex flex-col sm:flex-row flex-wrap justify-between items-center gap-4">
+          {/* Búsqueda por ID */}
           <div className="w-full sm:w-auto">
             <input
               type="text"
-              placeholder="Buscar contenedor..."
+              placeholder="Buscar por ID..."
               className="px-4 py-2 border rounded-lg w-full"
+              value={busqueda}
+              onChange={(e) => {
+                setBusqueda(e.target.value);
+                setPaginaActual(1);
+              }}
             />
           </div>
-          <div className="flex gap-2 w-full sm:w-auto">
-            <button className="px-4 py-2 bg-blue-500 text-white rounded-lg">Todos</button>
-            <button className="px-4 py-2 bg-gray-200 rounded-lg">Plásticos</button>
-            <button className="px-4 py-2 bg-gray-200 rounded-lg">Vidrio</button>
+
+          {/* Filtro por tipo */}
+          <div className="flex gap-2 w-full sm:w-auto flex-wrap">
+            {['Todos', 'Plásticos', 'Vidrio', 'Orgánico', 'Papel/Cartón'].map((tipo) => (
+              <button
+                key={tipo}
+                className={`px-4 py-2 rounded-lg ${
+                  filtro === tipo ? 'bg-blue-500 text-white' : 'bg-gray-200'
+                }`}
+                onClick={() => {
+                  setFiltro(tipo);
+                  setPaginaActual(1);
+                }}
+              >
+                {tipo}
+              </button>
+            ))}
+          </div>
+
+          {/* Filtro por ubicación */}
+          <div className="w-full sm:w-auto">
+            <select
+              className="px-4 py-2 border rounded-lg w-full"
+              value={ubicacionFiltro}
+              onChange={(e) => {
+                setUbicacionFiltro(e.target.value);
+                setPaginaActual(1);
+              }}
+            >
+              {ubicacionesUnicas.map((ubic) => (
+                <option key={ubic} value={ubic}>
+                  {ubic}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
         {/* Lista de contenedores */}
         <div className="space-y-6">
-          {contenedores.map((contenedor) => (
-            <ComponenteLista
-              key={contenedor.id}
-              id={contenedor.id}
-              tipo={contenedor.tipo}
-              capacidad={contenedor.capacidad}
-              ubicacion={contenedor.ubicacion}
-              nivelLlenado={contenedor.nivelLlenado}
-              color={contenedor.color}
-              onVerDetalles={() => handleVerContenedores(contenedor.id)}
-            />
-          ))}
+          {contenedoresPaginados.length === 0 ? (
+            <p className="text-center text-gray-500">No se encontraron contenedores.</p>
+          ) : (
+            contenedoresPaginados.map((contenedor) => (
+              <ComponenteLista
+                key={contenedor.id}
+                {...contenedor}
+                onVerDetalles={() => handleVerContenedores(contenedor.id)}
+              />
+            ))
+          )}
         </div>
 
-        {/* Paginación (opcional) */}
-        <div className="mt-8 flex justify-center">
-          <nav className="flex gap-2">
-            <button className="px-4 py-2 bg-blue-500 text-white rounded-lg">1</button>
-            <button className="px-4 py-2 bg-gray-200 rounded-lg">2</button>
-            <button className="px-4 py-2 bg-gray-200 rounded-lg">Siguiente</button>
-          </nav>
-        </div>
+        {/* Paginación */}
+        {totalPaginas > 1 && (
+          <div className="mt-8 flex justify-center">
+            <nav className="flex gap-2">
+              {[...Array(totalPaginas)].map((_, index) => (
+                <button
+                  key={index + 1}
+                  onClick={() => setPaginaActual(index + 1)}
+                  className={`px-4 py-2 rounded-lg ${
+                    paginaActual === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+              {paginaActual < totalPaginas && (
+                <button
+                  onClick={() => setPaginaActual((prev) => prev + 1)}
+                  className="px-4 py-2 bg-gray-200 rounded-lg"
+                >
+                  Siguiente
+                </button>
+              )}
+            </nav>
+          </div>
+        )}
       </div>
     </div>
   );

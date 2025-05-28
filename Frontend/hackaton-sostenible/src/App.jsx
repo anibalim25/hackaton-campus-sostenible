@@ -1,15 +1,14 @@
-import Contenedor from "./Contenedor"
-import Home from "./Home"
-
-
+import { Routes, Route, Router } from 'react-router-dom';
+import Home from './Home';
+import Lista from './Lista';
 function App() {
 
   return (
     <>
-      <Home/>
+      <Lista/>
     </>
   )
-
 }
 
 export default App
+
