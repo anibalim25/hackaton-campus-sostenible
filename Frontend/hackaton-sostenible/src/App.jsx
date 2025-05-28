@@ -1,3 +1,4 @@
+import Contenedor from "./Contenedor"
 import Home from "./Home"
 
 
@@ -5,7 +6,6 @@ function App() {
 
   return (
     <>
-      
       <Home/>
     </>
   )

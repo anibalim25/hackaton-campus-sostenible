@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme {
+    --color-naranja-next: #F2A900;
+    --color-azul-next: #71C5E8;
+    --color-grisaceo-next: #333F48;
+    --color-azul-upm: #1f82c0;
+}
