@@ -10,7 +10,7 @@ function Home() {
                         <hr className={`border-green-500 w-[80%] border-2 mt-2 mb-6`}></hr>
                     </div>
                     <div className="flex justify-center mt-8">
-                        <BotonNavegacion 
+                        <BotonNavegacion to = "/lista"
                             className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
                         >
                             Lista
