@@ -71,12 +71,12 @@ export default function ComponenteLista({
         </div>
 
         <div className="flex justify-center mt-4">
-          <button
-            onClick={onVerDetalles}
+          <BotonNavegacion
+            to={"/Contenedor"}
             className={`${buttonClasses[color]} text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg transition duration-300 hover:shadow-xl`}
           >
             Ver Contenedor
-          </button>
+          </BotonNavegacion>
         </div>
       </div>
     </div>
