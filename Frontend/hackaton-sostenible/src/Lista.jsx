@@ -49,7 +49,7 @@ function Lista() {
     console.log(`Mostrar detalles del contenedor ${id}`);
   };
 
-  // Filtrado
+  //FILTER
   const contenedoresFiltrados = contenedores.filter(c => {
     const coincideTipo = filtro === 'Todos' || c.tipo === filtro;
     const coincideBusqueda = c.id.toLowerCase().includes(busqueda.toLowerCase());
@@ -57,7 +57,7 @@ function Lista() {
     return coincideTipo && coincideBusqueda && coincideUbicacion;
   });
 
-  // Paginación
+  // PAGING
   const indexInicio = (paginaActual - 1) * contenedoresPorPagina;
   const indexFin = indexInicio + contenedoresPorPagina;
   const contenedoresPaginados = contenedoresFiltrados.slice(indexInicio, indexFin);
@@ -68,8 +68,9 @@ function Lista() {
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Monitor de Contenedores ECO-ETSISI</h1>
 
+        {/* Filtros */}
+
         <div className="mb-8 flex flex-col sm:flex-row flex-wrap justify-between items-center gap-4">
-          {/* Búsqueda por ID */}
           <div className="w-full sm:w-auto">
             <input
               type="text"
@@ -83,7 +84,7 @@ function Lista() {
             />
           </div>
 
-          {/* Filtro por tipo */}
+          
           <div className="flex gap-2 w-full sm:w-auto flex-wrap">
             {['Todos', 'Plásticos', 'Vidrio', 'Orgánico', 'Papel/Cartón'].map((tipo) => (
               <button
@@ -101,7 +102,6 @@ function Lista() {
             ))}
           </div>
 
-          {/* Filtro por ubicación */}
           <div className="w-full sm:w-auto">
             <select
               className="px-4 py-2 border rounded-lg w-full"
@@ -135,7 +135,7 @@ function Lista() {
           )}
         </div>
 
-        {/* Paginación */}
+        {/* PAGING */}
         {totalPaginas > 1 && (
           <div className="mt-8 flex justify-center">
             <nav className="flex gap-2">
