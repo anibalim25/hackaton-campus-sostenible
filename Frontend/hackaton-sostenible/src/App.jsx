@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <Home/>
+      <Contenedor ubicacion={"Biblioteca"} llenado={"77"} tipo={"Papel"}></Contenedor>
     </>
   )
 
