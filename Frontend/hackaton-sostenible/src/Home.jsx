@@ -16,6 +16,13 @@ function Home() {
                             Lista
                         </BotonNavegacion>
                     </div>
+                    <div className="flex justify-center mt-8">
+                        <BotonNavegacion to = "/historico"
+                            className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                        >
+                            Historico
+                        </BotonNavegacion>
+                    </div>
                 </main>    
             </div>
         </>
